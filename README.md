@@ -40,6 +40,46 @@ Php artisan serve <br>
 
 <li>Use the functionality of the project.</li>
 
+</ol>
+
+<h1>Project Design Logics:</h1>
+
+<h3>Database Table Structures:</h3>
+
+<p>Schema::create('users', function (Blueprint $table) {<br>
+            $table->bigIncrements('id');<br>
+            $table->string('name');<br>
+            $table->string('email')->unique();<br>
+            $table->timestamp('email_verified_at')->nullable();<br>
+            $table->string('password');<br>
+            $table->string('access_right')->default('U');<br>
+            $table->rememberToken();<br>
+            $table->timestamps();<br>
+        });<br>
+    </p>
+
+<p>Schema::create('scores', function (Blueprint $table) {<br>
+            $table->bigIncrements('id');<br>
+            $table->unsignedBigInteger('user_id');<br>
+            $table->string('level');<br>
+            $table->integer('score')->unsigned();<br>
+            $table->boolean('authorize')->default(0);<br>
+            $table->timestamps();<br>
+            $table->foreign('user_id')->references('id')->on('users');<br>
+        });<br>
+
+</p>
+<p>
+<h3>Functional Logic:</h3>
+
+<h4>If(public user)</h4>
+	View all admin authorized score record.<br>
+<h4>If( registered user)</h4>
+	Can view, create and update own score records but not able to authorize. <br>
+<h4>If(Admin User) </h4>
+	Can view, create and update all score records but able to authorize to view for general public.<br>
+
+</p>
 
 <p>Thanks.<br> Niaz</p>
 
