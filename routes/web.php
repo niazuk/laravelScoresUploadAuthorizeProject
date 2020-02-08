@@ -17,9 +17,9 @@ Auth::routes();
 
 Route::get('/home', 'ScoreController@index')->name('home');
 
-Route::get('/scores/create', 'ScoreController@create')->name('create');
+Route::get('/scores', 'ScoreController@create')->name('create');
 
-Route::post('/scores/store', 'ScoreController@store')->name('store');
+Route::post('/scores', 'ScoreController@store')->name('store');
 
 Route::post('/scores/{score}', 'ScoreController@edit')->name('edit');
 
