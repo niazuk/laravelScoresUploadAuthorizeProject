@@ -43,7 +43,7 @@ class ScoreController extends Controller
         else
             $where = "where scores.user_id = ".Auth::user()->id;
 
-        $scores = DB::select('select scores.id as id, users.name as name, scores.level as level, scores.score as score, scores.authorize as authorize from scores join users on scores.user_id = users.id '.$where.' and (scores.level = "'.$request->search.'" or users.name = "'.$request->search.'" ) order by scores.score desc');
+        $scores = DB::select('select scores.id as id, users.name as name, scores.level as level, scores.score as score, scores.authorize as authorize from scores join users on scores.user_id = users.id '.$where.' and (scores.level = "'.$request->search.'" or users.name like "%'.$request->search.'%" ) order by scores.score desc');
         return view('score.index',['scores' => $scores]);
     }
 
