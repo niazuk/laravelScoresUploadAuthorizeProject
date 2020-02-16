@@ -35,6 +35,18 @@ class ScoreController extends Controller
         return view('score.index',['scores' => $scores]);
     }
 
+    public function search(Request $request)
+    {
+
+        if(Auth::user()->access_right == 'A')
+            $where = "";
+        else
+            $where = "where scores.user_id = ".Auth::user()->id;
+
+        $scores = DB::select('select scores.id as id, users.name as name, scores.level as level, scores.score as score, scores.authorize as authorize from scores join users on scores.user_id = users.id '.$where.' and (scores.level = "'.$request->search.'" or users.name = "'.$request->search.'" ) order by scores.score desc');
+        return view('score.index',['scores' => $scores]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -118,7 +130,9 @@ class ScoreController extends Controller
      */
     public function destroy(Score $score)
     {
-        //
+        $score = Score::findOrfail($score->id);
+        $score->delete();
+        return redirect()->route("home")->with('message','Score Deleted');
     }
 
     protected function validateScore()

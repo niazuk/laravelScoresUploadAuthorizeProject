@@ -14,4 +14,10 @@ class IndexPageController extends Controller
         $scores = DB::select('select scores.id as id, users.name as user_id, scores.level as level, scores.score as score from scores join users on scores.user_id = users.id where scores.authorize = 1 order by scores.score desc');
         return view('index',['scores' => $scores]);
     }
+
+    public function search(Request $request)
+    {
+    	$scores = DB::select('select scores.id as id, users.name as user_id, scores.level as level, scores.score as score from scores join users on scores.user_id = users.id where scores.authorize = 1 and (scores.level = "'.$request->search.'" or users.name = "'.$request->search.'" ) order by scores.score desc');
+        return view('index',['scores' => $scores]);
+    }
 }

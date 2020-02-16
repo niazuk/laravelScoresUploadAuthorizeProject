@@ -26,7 +26,7 @@
                                 <th>Difficulty</th>
                                 <th>Score</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th colspan="2" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,15 +46,24 @@
                                 </td>
                                 <td><form method="post" action="{{route('edit',['score' => $score->id] )}}">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary">Edit</button></form></td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    <button type="submit" class="btn btn-primary">Edit</button></form>
+                                </td>                                
+                                   @if(Auth::user()->access_right == 'A') 
+                                   <td>
+                                   <form method="post" action="{{route('delete',['score' => $score->id] )}}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-primary">Delete</button></form>
+                                </td>
+                                    @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
